@@ -1,0 +1,29 @@
+{
+  "name": "ngxsmk-button-spinner",
+  "version": "1.0.1",
+  "description": "Directive to overlay a loading spinner on any button (Angular 17+).",
+  "author": "Sachin Dilshan",
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "spinner",
+    "button",
+    "directive",
+    "ngxsmk",
+    "loading"
+  ],
+  "sideEffects": false,
+  "peerDependencies": {
+    "@angular/core": ">=17.0.0",
+    "@angular/common": ">=17.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./ngxsmk-button-spinner.d.ts",
+      "esm2022": "./fesm2022/ngxsmk-button-spinner.mjs",
+      "default": "./fesm2022/ngxsmk-button-spinner.mjs"
+    },
+    "./styles.css": "./styles.css"
+  },
+  "typings": "ngxsmk-button-spinner.d.ts"
+}

@@ -1,0 +1,15 @@
+.ngxsmk-inline-spinner {
+  width: var(--_ngxsmk-size, 1.2em);
+  height: var(--_ngxsmk-size, 1.2em);
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: ngxsmk-spin .7s linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes ngxsmk-spin {
+  to { transform: rotate(360deg); }
+}
+
+.ngxsmk-loading { position: relative; }

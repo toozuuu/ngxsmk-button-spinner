@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/ngxsmk-button-spinner",
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  },
+  "assets": [
+    "src/lib/button-spinner.directive.scss"
+  ]
+}
