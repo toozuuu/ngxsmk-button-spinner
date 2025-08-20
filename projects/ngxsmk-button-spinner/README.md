@@ -16,7 +16,7 @@ A tiny Angular 17+ **directive** that adds a loading spinner to any existing `<b
 ## Screenshot
 
 <p align="left">
-  <img src="https://raw.githubusercontent.com/toozuuu/ngxsmk-button-spinner/master/mui-tel-input.gif"
+  <img src="https://raw.githubusercontent.com/toozuuu/ngxsmk-button-spinner/master/demo.gif"
        alt="ngxsmk-button-spinner demo" width="720">
 </p>
 
