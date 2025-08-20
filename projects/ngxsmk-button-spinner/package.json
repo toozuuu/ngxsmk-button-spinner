@@ -1,6 +1,6 @@
 {
   "name": "ngxsmk-button-spinner",
-  "version": "1.0.3",
+  "version": "1.1.5",
   "description": "Directive to overlay a loading spinner on any button (Angular 17+).",
   "author": "Sachin Dilshan",
   "license": "MIT",
