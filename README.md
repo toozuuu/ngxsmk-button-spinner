@@ -15,10 +15,7 @@ A tiny Angular 17+ **directive** that adds a loading spinner to any existing `<b
 
 ## Screenshot
 
-<p align="center">
-  <img src="https://unpkg.com/ngxsmk-button-spinner@latest/docs/demo.gif"
-       alt="ngxsmk-button-spinner demo" width="720">
-</p>
+![Image](https://github.com/user-attachments/assets/8b0b8dba-58eb-4d72-93da-d72dc84db678)
 
 ---
 
