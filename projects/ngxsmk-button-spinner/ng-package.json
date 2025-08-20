@@ -5,6 +5,12 @@
     "entryFile": "src/public-api.ts"
   },
   "assets": [
-    "src/lib/button-spinner.directive.scss"
+    "README.md",
+    "LICENSE",
+    {
+      "glob": "docs/**",
+      "input": ".",
+      "output": "docs"
+    }
   ]
 }
