@@ -1,15 +1,14 @@
 .ngxsmk-inline-spinner {
-  width: var(--_ngxsmk-size, 1.2em);
-  height: var(--_ngxsmk-size, 1.2em);
-  border: 2px solid currentColor;
-  border-right-color: transparent;
+  width: var(--ngxsmk-size, 1em);
+  height: var(--ngxsmk-size, 1em);
+  border: var(--ngxsmk-thickness, 2px) solid var(--ngxsmk-color, currentColor);
+  border-right-color: var(--ngxsmk-track, transparent);
   border-radius: 50%;
-  animation: ngxsmk-spin .7s linear infinite;
-  opacity: 0.9;
+  animation: ngxsmk-spin var(--ngxsmk-speed, 700ms) linear infinite;
 }
 
 @keyframes ngxsmk-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
-
-.ngxsmk-loading { position: relative; }

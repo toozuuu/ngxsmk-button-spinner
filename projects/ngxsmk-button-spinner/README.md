@@ -1,22 +1,25 @@
 # ngxsmk-button-spinner
 
-A tiny Angular 17+ directive that overlays a loading **spinner** on any existing `<button>` — without changing your markup and **without requiring a global stylesheet**.
+A tiny Angular 17+ **directive** that adds a loading spinner to any existing `<button>` — no component swap and **no global stylesheet** required.
 
-- ✅ Works with your current buttons (no component swap)
-- ✅ Zero CSS imports — styles are injected once by the directive
-- ✅ Theming via inputs (color, size, thickness, speed, dim overlay)
-- ✅ A11y-friendly (`role="status"`, configurable aria-label)
-- ✅ Strict TypeScript compatible
+* ✅ Drop-in attribute: `[ngxsmkButtonSpinner]="loading"`
+* ✅ Two display modes:
+
+  * **Inline** (default): spinner appears **after the text** with a small gap
+  * **Overlay** (centered): set `[ngxsmkButtonSpinnerHideLabel]="true"` to hide text and center the spinner
+* ✅ Theming via inputs (color, size, thickness, speed)
+* ✅ A11y-friendly (`role="status"`, configurable aria-label)
+* ✅ Strict TypeScript & SSR-safe
 
 ---
 
 ## Install
 
 ```bash
-  npm i ngxsmk-button-spinner
-````
+npm i ngxsmk-button-spinner
+```
 
-Angular peer deps: `@angular/core@>=17`, `@angular/common@>=17`.
+Peer deps: `@angular/core@>=17`, `@angular/common@>=17`.
 
 ---
 
@@ -52,33 +55,25 @@ That’s it — no stylesheet import needed.
 
 ## API
 
-### Directive
+### Directive Inputs
 
 ```html
 <button
   [ngxsmkButtonSpinner]="loading"
+  [ngxsmkButtonSpinnerHideLabel]="true"           <!-- optional: overlay mode -->
   [ngxsmkButtonSpinnerOptions]="{ ariaLabel: 'Saving' }"
-  [ngxsmkButtonSpinnerTheme]="{
-    color: '#0ea5e9',
-    trackColor: 'rgba(14,165,233,.25)',
-    thickness: '3px',
-    size: '20px',
-    speedMs: 500,
-    dimOverlay: 'rgba(0,0,0,.15)',
-    keepLabel: true
-  }"
+  [ngxsmkButtonSpinnerTheme]="{ color: '#0ea5e9', thickness: '3px', size: '20px', speedMs: 500 }"
 >
   Save
 </button>
 ```
 
-#### Inputs
-
-| Input                        | Type                                                                            | Default                    | Description                                                     |
-| ---------------------------- | ------------------------------------------------------------------------------- | -------------------------- | --------------------------------------------------------------- |
-| `ngxsmkButtonSpinner`        | `boolean`                                                                       | `false`                    | When `true`, disables the button and overlays the spinner.      |
-| `ngxsmkButtonSpinnerOptions` | `{ ariaLabel?: string; mode?: 'overlay'; }`                                     | `{ ariaLabel: 'Loading' }` | A11y label for the spinner. (Mode reserved for future layouts.) |
-| `ngxsmkButtonSpinnerTheme`   | `{ color?, trackColor?, thickness?, size?, speedMs?, dimOverlay?, keepLabel? }` | see below                  | Visual/theme knobs, all optional.                               |
+| Input                          | Type                                                   | Default                    | Description                                                              |
+| ------------------------------ | ------------------------------------------------------ | -------------------------- | ------------------------------------------------------------------------ |
+| `ngxsmkButtonSpinner`          | `boolean`                                              | `false`                    | When `true`, disables the button and shows the spinner.                  |
+| `ngxsmkButtonSpinnerHideLabel` | `boolean`                                              | `false`                    | If `true`, hides text and **centers spinner** over the button (overlay). |
+| `ngxsmkButtonSpinnerOptions`   | `{ ariaLabel?: string }`                               | `{ ariaLabel: 'Loading' }` | A11y label for the spinner.                                              |
+| `ngxsmkButtonSpinnerTheme`     | `{ color?, trackColor?, thickness?, size?, speedMs? }` | see defaults below         | Visual/theme knobs, all optional.                                        |
 
 #### Theme defaults
 
@@ -87,23 +82,28 @@ That’s it — no stylesheet import needed.
 * `thickness`: `2px`
 * `size`: `1.2em`
 * `speedMs`: `700`
-* `dimOverlay`: `transparent`
-* `keepLabel`: `false` (hides text by setting `color: transparent` while loading)
 
-> You can also override these via inline styles or component CSS using the same variables on the button element:
-> `--ngxsmk-color`, `--ngxsmk-track`, `--ngxsmk-thickness`, `--ngxsmk-size`, `--ngxsmk-speed`, `--ngxsmk-dim-overlay`.
+> You can also override these via inline styles or component CSS using the same variables on the button element: `--ngxsmk-color`, `--ngxsmk-track`, `--ngxsmk-thickness`, `--ngxsmk-size`, `--ngxsmk-speed`.
 
 ---
 
 ## Examples
 
-### Minimal
+### 1) Minimal (inline spinner after text)
 
 ```html
 <button [ngxsmkButtonSpinner]="loading">Submit</button>
 ```
 
-### Custom brand + thicker border + bigger size
+### 2) Overlay (centered) spinner, hide text while loading
+
+```html
+<button [ngxsmkButtonSpinner]="loading" [ngxsmkButtonSpinnerHideLabel]="true">
+  Save
+</button>
+```
+
+### 3) Custom brand + thicker border + bigger size
 
 ```html
 <button
@@ -114,24 +114,7 @@ That’s it — no stylesheet import needed.
 </button>
 ```
 
-### Dim overlay + keep label visible
-
-```html
-<button
-  [ngxsmkButtonSpinner]="loading"
-  [ngxsmkButtonSpinnerTheme]="{
-    color: 'white',
-    trackColor: 'rgba(255,255,255,.35)',
-    dimOverlay: 'rgba(0,0,0,.25)',
-    keepLabel: true
-  }"
-  style="background:#111827; color:#fff; border-radius:10px"
->
-  Processing…
-</button>
-```
-
-### Faster spin + size in `em`
+### 4) Faster spin + size in `em`
 
 ```html
 <button
@@ -148,49 +131,45 @@ That’s it — no stylesheet import needed.
 
 * Spinner element uses `role="status"` and `aria-label` (default `"Loading"`).
 * The directive sets `disabled` on the button while loading.
-* If you keep the label hidden (default), screen readers still get the status via the spinner’s aria label.
-* To always show the label, set `keepLabel: true` in theme.
-
----
-
-## How it works (no CSS import)
-
-* On first use, the directive injects a small `<style>` tag into `document.head`.
-* Visuals are powered by CSS variables applied on the **button** element, so you can theme per-instance.
-* Spinner and optional dim overlay are appended as absolutely positioned children of your button.
+* If you hide the label (overlay mode), screen readers still get the status via the spinner’s aria label.
 
 ---
 
 ## SSR / hydration
 
-The directive adds DOM nodes on the client when `loading=true`. For SSR/hydration-safe usage, prefer toggling `loading` only after the component is hydrated (e.g., in response to user actions or effects that run in the browser).
+This directive avoids DOM APIs on the server. Spinner elements and the small `<style>` tag are injected **only in the browser** after view init. For best UX, toggle `loading` in response to user actions or browser-only effects.
 
 ---
 
 ## Troubleshooting
 
+* **ReferenceError: document is not defined**
+  Ensure you’re using the latest directive: it guards DOM access with `PLATFORM_ID` and only injects styles in the browser.
+
 * **TS2532: Object is possibly 'undefined'**
-  The directive is strict-mode safe. If you adapted it, ensure optional fields are null-checked before use.
+  The directive is strict-mode safe. If you modified it, null‑check optional fields before use.
 
 * **TS5076: `&&` and `??` cannot be mixed**
-  Parenthesize or simplify. Example:
-  `const keep = theme?.keepLabel ?? false;`
+  Parenthesize or simplify. Example: `const keep = theme?.keepLabel ?? false;`
 
 * **Spinner not visible**
-  Check that button text color isn’t fully transparent if `keepLabel: true`. Also ensure the button isn’t `overflow: hidden` with small height.
-
-* **Button layout jumps**
-  Because we keep layout and overlay the spinner, text is hidden via `color: transparent`. If your button relies on `currentColor` for borders/icons, set `keepLabel: true` or provide explicit colors.
+  In overlay mode the text is hidden via `color: transparent`. If your icon/border relies on `currentColor`, either set explicit colors or use inline mode.
 
 ---
 
+## Public API
+
+```ts
+// public-api.ts
+export * from './lib/button-spinner.directive';
+export * from './lib/types';
+```
 
 ### Types
 
 ```ts
 export interface NgxSmkButtonSpinnerOptions {
   ariaLabel?: string;
-  mode?: 'overlay';
 }
 
 export interface NgxSmkButtonSpinnerTheme {
@@ -199,8 +178,6 @@ export interface NgxSmkButtonSpinnerTheme {
   thickness?: string;
   size?: string;
   speedMs?: number;
-  dimOverlay?: string;
-  keepLabel?: boolean;
 }
 ```
 
